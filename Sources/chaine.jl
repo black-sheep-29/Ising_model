@@ -55,5 +55,3 @@ function systemConstant(spins::Vector{Int}, J::Float64)
     couplages = J * (ones(n_spins, n_spins) - Matrix(I, n_spins, n_spins))
     return Chaine(spins, couplages)
 end
-
-# Calculer énergie
