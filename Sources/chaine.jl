@@ -1,6 +1,8 @@
 using LinearAlgebra
 using Random
 
+# Définitions
+
 struct Chaine
     spins::Vector{Int}
     couplages::Matrix{Float64}
@@ -18,6 +20,8 @@ struct Chaine
         return new(spins, couplages)
     end
 end
+
+# Constructeurs
 
 function systemeUnVoisin(spins::Vector{Int}, J::Float64)
     n_spins = length(spins)
@@ -51,3 +55,5 @@ function systemConstant(spins::Vector{Int}, J::Float64)
     couplages = J * (ones(n_spins, n_spins) - Matrix(I, n_spins, n_spins))
     return Chaine(spins, couplages)
 end
+
+# Calculer énergie
