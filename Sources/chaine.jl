@@ -27,21 +27,27 @@ function systemeUnVoisin(spins::Vector{Int}, J::Float64)
     n_spins = length(spins)
     couplages = zeros(n_spins, n_spins)
     for i in 1:(n_spins - 1)
-        couplages[i, i+1] = J
-        couplages[i+1, i] = J
+        couplages[i, i + 1] = J
+        couplages[i + 1, i] = J
     end
     return Chaine(spins, couplages)
 end
 
-function systemDeuxVoisins(spins::Vector{Int})
-    # ... À faire si besoin
+function systemDeuxVoisins(spins::Vector{Int}, J::Float64)
+    n_spins = length(spins)
+    couplages = zeros(n_spins, n_spins)
+    for i in 1:(n_spins - 2)
+        couplages[i, i + 2] = J
+        couplages[i + 2, i] = J
+    end
+    return Chaine(spins, couplages)
 end
 
 function systemeAleatoire(spins::Vector{Int}, J_min::Float64, J_max::Float64)
     n_spins = length(spins)
     couplages = zeros(n_spins, n_spins)
     for i in 1:(n_spins - 1)
-        for j in i+1:n_spins
+        for j in i + 1:n_spins
             x = J_min + rand() * (J_max - J_min)
             couplages[i, j] = x
             couplages[j, i] = x
