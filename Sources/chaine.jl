@@ -43,7 +43,7 @@ function systemDeuxVoisins(spins::Vector{Int}, J::Float64)      # Ex: systemDeux
     return Chaine(spins, couplages)
 end
 
-function systemeAleatoire(spins::Vector{Int}, J_min::Float64, J_max::Float64)  
+function systemeAleatoire(spins::Vector{Int}, J_min::Float64, J_max::Float64)
     n_spins = length(spins)
     couplages = zeros(n_spins, n_spins)
     for i in 1:(n_spins - 1)
@@ -65,5 +65,18 @@ end
 
 #Calculer Énergie
 
-chaine = systemDeuxVoisins([0, 0, 0], 1.0)
-println(chaine)
+function calculer_energie(systemeUnVoisin)
+    energie = 0.0
+    for i in 1:length(couplages)
+        total = 0
+        for x in 1:(length(chaine) - 1)
+            if chaine.spins[x] == chaine.spins[x + 1]
+                total += 1
+            else
+                total -= 1
+            end
+        end
+        energie -= chaine.couplages[i] * total
+    end
+    return energie
+end
