@@ -23,27 +23,27 @@ end
 
 # Constructeurs
 
-function systemeUnVoisin(spins::Vector{Int}, J::Float64)
-    n_spins = length(spins)
-    couplages = zeros(n_spins, n_spins)
-    for i in 1:(n_spins - 1)
-        couplages[i, i + 1] = J
+function systemeUnVoisin(spins::Vector{Int}, J::Float64)        # EX: systemeUnVoisin([1, 1, 1], 1.0)
+    n_spins = length(spins)                                     #
+    couplages = zeros(n_spins, n_spins)                         #  0 0 0       0.0  1.0  0.0
+    for i in 1:(n_spins - 1)                                    #  0 0 0  -->  1.0  0.0  1.0
+        couplages[i, i + 1] = J                                 #  0 0 0       0.0  1.0  0.0
         couplages[i + 1, i] = J
     end
     return Chaine(spins, couplages)
 end
 
-function systemDeuxVoisins(spins::Vector{Int}, J::Float64)
-    n_spins = length(spins)
-    couplages = zeros(n_spins, n_spins)
-    for i in 1:(n_spins - 2)
-        couplages[i, i + 2] = J
-        couplages[i + 2, i] = J
+function systemDeuxVoisins(spins::Vector{Int}, J::Float64)      # Ex: systemDeuxVoisins([0, 0, 0], 1.0)
+    n_spins = length(spins)                                     #
+    couplages = zeros(n_spins, n_spins)                         #  0 0 0       0.0  1.0  0.0
+    for i in 1:(n_spins - 2)                                    #  0 0 0 -->   1.0  0.0  0.0
+        couplages[i, i + 1] = J                                 #  0 0 0       0.0  0.0  0.0
+        couplages[i + 1, i] = J
     end
     return Chaine(spins, couplages)
 end
 
-function systemeAleatoire(spins::Vector{Int}, J_min::Float64, J_max::Float64)
+function systemeAleatoire(spins::Vector{Int}, J_min::Float64, J_max::Float64)  
     n_spins = length(spins)
     couplages = zeros(n_spins, n_spins)
     for i in 1:(n_spins - 1)
@@ -65,5 +65,5 @@ end
 
 #Calculer Énergie
 
-chaine = systemeUnVoisin([1, 1], 1.0)
+chaine = systemDeuxVoisins([0, 0, 0], 1.0)
 println(chaine)
