@@ -59,9 +59,9 @@ function systemeAleatoire(spins::Vector{Int}, J_min::Float64, J_max::Float64)
     n_spins = length(spins)
     couplages = zeros(n_spins, n_spins)
     for i in 1:(n_spins - 1)
-        for j in i + 1:n_spins
-            x = J_min + rand() * (J_max - J_min)
-            couplages[i, j] = x
+        for j in i + 1:n_spins                     # Ex: J-min = 1, J_max = 1
+            x = J_min + rand() * (J_max - J_min)   #  x = 1 + 0.7563463467467 * 0
+            couplages[i, j] = x                    #  x = 0
             couplages[j, i] = x
         end
     end
@@ -96,6 +96,6 @@ end
 
 
 
-
-chaine = systemeUnVoisin([1, 1, 1], 1.0)
+Random.seed!(42)
+chaine = systemeAleatoire([0, 1, 1, 0, 0], 3.0, 7.0)
 println(calculer_energie(chaine))
