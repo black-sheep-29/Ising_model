@@ -1,13 +1,17 @@
 include("../Sources/chaine.jl")
 using Test
 
-# Test 1: Énergie chaine 1 voisins
-@testset "Chaine 1 voisin" begin
+# Tests Constructeurs
+@testset "Constructeurs" begin          # erreur #
 
-#    chaine = systemeUnVoisin([1, 1, 1, 1], 1.0)
-#    @test calculer_energie(chaine) ≈ -3.0
+#    @test systemeUnVoisin([1, 1, 1], 1.0)) == Chaine([1, 1, 1], [0.0 1.0 0.0; 1.0 0.0 1.0; 0.0 1.0 0.0])
 
 end
 
- chaine = systemeUnVoisin([1, 1, 1, 1], 1.0)
- println(chaine)
+# Tests Énergie
+
+@testset "Calculer Énergie" begin
+
+    chaine = systemeUnVoisin([1, 1, 1, 0, 0], 3.0)
+    @test calculer_energie(chaine)  ≈ -6.0
+end
