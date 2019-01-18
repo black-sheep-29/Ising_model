@@ -58,17 +58,17 @@ end
 function systemeAleatoire(spins::Vector{Int}, J_min::Float64, J_max::Float64)
     n_spins = length(spins)
     couplages = zeros(n_spins, n_spins)
-    for i in 1:(n_spins - 1)
-        for j in i + 1:n_spins                     # Ex: J-min = 1, J_max = 1
-            x = J_min + rand() * (J_max - J_min)   #  x = 1 + 0.7563463467467 * 0
-            couplages[i, j] = x                    #  x = 0
+    for i in 1:(n_spins  - 1)                            # J-P:
+        for j in i + 1:n_spins                           # Ex: J-min = 1, J_max = 1
+            x = J_min + rand() * (J_max - J_min)         #  x = 1 + 0.7563463467467 * 0
+            couplages[i, j] = x                          #  x = 0
             couplages[j, i] = x
         end
     end
     return Chaine(spins, couplages)
 end
 
-function systemConstant(spins::Vector{Int}, J::Float64)
+function systemeConstant(spins::Vector{Int}, J::Float64)
     n_spins = length(spins)
     couplages = J * (ones(n_spins, n_spins) - Matrix(I, n_spins, n_spins))
     return Chaine(spins, couplages)
@@ -76,8 +76,6 @@ end
 
 #Calculer Énergie
 
-# Maxime : systemeUnVoisin n'est pas un type, mais le nom d'une fonction. Le type est Chaine. De plus, comme tu as fais,
-# c'est simplement le nom de la variable. Va voir plus bas pour ma suggestion
 function calculer_energie(chaine::Chaine)
     energie = 0.0
     for i in 1:length(chaine)
@@ -93,9 +91,3 @@ function calculer_energie(chaine::Chaine)
     end
     return energie
 end
-
-
-
-Random.seed!(42)
-chaine = systemeAleatoire([0, 1, 1, 0, 0], 3.0, 7.0)
-println(calculer_energie(chaine))
