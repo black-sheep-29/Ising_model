@@ -1,7 +1,7 @@
 using LinearAlgebra
 using Random
 
-import Base: length
+import Base: length, ==, !=, ≈
 
 # Définitions
 
@@ -25,6 +25,10 @@ end
 
 # Maxime : La longueur d'une chaine est le nombre de spins.
 length(chaine::Chaine) = length(chaine.spins)
+==(c1::Chaine, c2::Chaine) = (c1.spins == c2.spins) && (c1.couplages == c1.couplages)
+!=(c1::Chaine, c2::Chaine) = !(c1 == c2)
+≈(c1::Chaine, c2::Chaine) = (c1.spins == c2.spins) && (c1.couplages ≈ c1.couplages)
+
 
 # Constructeurs
 
