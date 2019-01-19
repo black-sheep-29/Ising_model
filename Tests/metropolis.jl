@@ -23,3 +23,14 @@ end
     chaine = systemeDeuxVoisins([1, 0, 0, 1, 1], 3.54, -2.0)
     @test inverser_spin(chaine, 2) == [1, 1, 0, 1, 1]
 end
+
+@testset "Énergie" begin
+
+end
+
+@testset "Magnetisation" begin
+
+    chaine = systemeUnVoisin([0, 0, 0, 1], 2.5)
+    @test magnetisation(chaine) == -2
+
+end    
