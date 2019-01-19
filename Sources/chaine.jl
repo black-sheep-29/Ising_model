@@ -23,7 +23,6 @@ struct Chaine
     end
 end
 
-# Maxime : La longueur d'une chaine à le nombre de spins.
 length(chaine::Chaine) = length(chaine.spins)
 
 # Constructeurs
