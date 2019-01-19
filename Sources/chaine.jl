@@ -1,7 +1,7 @@
 using LinearAlgebra
 using Random
 
-import Base: length
+import Base: length, ==, !=, ≈
 
 # Définitions
 
@@ -24,6 +24,10 @@ struct Chaine
 end
 
 length(chaine::Chaine) = length(chaine.spins)
+==(c1::Chaine, c2::Chaine) = (c1.spins == c2.spins) && (c1.couplages == c1.couplages)
+!=(c1::Chaine, c2::Chaine) = !(c1 == c2)
+≈(c1::Chaine, c2::Chaine) = (c1.spins == c2.spins) && (c1.couplages ≈ c1.couplages)
+
 
 # Constructeurs
 
@@ -78,12 +82,11 @@ end
 function calculer_energie(chaine::Chaine)
     energie = 0.0
     for i in 1:length(chaine)
-        alignement_des_spins = 0
         for j in (i + 1):length(chaine)
             if chaine.spins[i] == chaine.spins[j]
-                alignement_des_spins += 1
+                global alignement_des_spins = 1
             else
-                alignement_des_spins -= 1
+                global alignement_des_spins = -1
             end
             energie -= chaine.couplages[i,j] * alignement_des_spins
         end
