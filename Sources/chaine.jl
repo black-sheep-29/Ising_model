@@ -1,7 +1,7 @@
 using LinearAlgebra
 using Random
 
-import Base: length, ==, !=, ≈
+import Base: length, copy, ==, !=, ≈
 
 # Définitions
 
@@ -28,6 +28,7 @@ length(chaine::Chaine) = length(chaine.spins)
 !=(c1::Chaine, c2::Chaine) = !(c1 == c2)
 ≈(c1::Chaine, c2::Chaine) = (c1.spins == c2.spins) && (c1.couplages ≈ c1.couplages)
 
+copy(chaine::Chaine) = Chaine(copy(chaine.spins), copy(chaine.couplages))
 
 # Constructeurs
 
@@ -77,6 +78,20 @@ function systemeConstant(spins::Vector{Int}, J::Float64)
     return Chaine(spins, couplages)
 end
 
+function systemePolynomial(spins::Vector{Int}, J::Float64, σ::Int)
+    n_spins = length(spins)
+    couplages = zeros(n_spins, n_spins) + Matrix(I, n_spins, n_spins)
+    for i in 1:(n_spins-1)
+        couplages[i,(i+1):end] = 1:(n_spins - i)
+    end
+    couplages += transpose(couplages)
+    couplages = 1 ./ (couplages .^ σ)
+    for i in 1:n_spins
+        couplages[i,i] = 0.0
+    end
+    return Chaine(spins, J * couplages)
+end
+
 #Calculer Énergie
 
 function calculer_energie(chaine::Chaine)
@@ -92,4 +107,40 @@ function calculer_energie(chaine::Chaine)
         end
     end
     return energie
+end
+
+function calculer_energie(chaine::Chaine, a::Int)
+    energie = 0.0
+    for j in 1:length(chaine)
+        if j != a
+            if chaine.spins[a] == chaine.spins[j]
+                energie -= chaine.couplages[a,j]
+            else
+                energie += chaine.couplages[a,j]
+            end
+        end
+    end
+    return energie
+end
+
+function difference_energie(chaine::Chaine, a)
+    return calculer_energie(inverser_spin(chaine, a), a) - calculer_energie(chaine, a)
+end
+
+# magnetisation
+
+function calculer_magnetisation(chaine::Chaine)
+    nbr_haut = sum(chaine.spins)
+    nbr_bas = length(chaine) - nbr_haut
+    return (nbr_haut - nbr_bas)
+end
+
+# Inverser spins
+
+function inverser_spin(chaine::Chaine, a::Int)
+    c = copy(chaine)
+    x = c.spins[a]
+    x = 1 - x
+    c.spins[a] = x
+    return c
 end
