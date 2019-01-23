@@ -22,26 +22,31 @@ end
 
 function energie(chaine::Chaine, a)                 # vérifier erreur #
     alignement_des_spins = 0
-    for i in 1:length(chaine)
-        for j in (i + 1):length(chaine)
-            if i != 1
-                if chaine.spins[i] == chaine.spins[j]
-                    alignement_des_spins += 1
-                else
-                    alignement_des_spins -= 1
-                end
-            end
-            if i != length(chaine)
-                if chaine.spins[i] == chaine.spins[j]
-                    alignement_des_spins += 1
-                else
-                    alignement_des_spins -= 1
-                end
+    if i != 1
+        if chaine.spins[i] == chaine.spins[i + 1]
+            global alignement_des_spins = 1
+        else
+            global alignement_des_spins = -1
+        end
+    end
+    if i != length(chaine)
+            if chaine.spins[i] == chaine.spins[i - 1]
+                global alignement_des_spins = 1
+            else
+                global alignement_des_spins = -1
             end
         end
     end
-    return -chaine.couplages[i, j] * alignement_des_spins
+    return -chaine.couplages[i] * alignement_des_spins
 end
+
+chaine = systemeUnVoisin([1, 1, 1, 0, 0], 3.0)
+println(energie(chaine, 2))
+
+
+
+
+
 
 function difference_energie(chaine::Chaine, a)                          # J-P: Pour tester la fonction il faut que
     return energie(inverser_spin(chaine, a), a) - energie(chaine, a)    # que la fonction énergie fonctionne!
