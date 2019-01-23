@@ -78,6 +78,20 @@ function systemeConstant(spins::Vector{Int}, J::Float64)
     return Chaine(spins, couplages)
 end
 
+function systemePolynomial(spins::Vector{Int}, J::Float64, σ::Int)
+    n_spins = length(spins)
+    couplages = zeros(n_spins, n_spins) + Matrix(I, n_spins, n_spins)
+    for i in 1:(n_spins-1)
+        couplages[i,(i+1):end] = 1:(n_spins - i)
+    end
+    couplages += transpose(couplages)
+    couplages = 1 ./ (couplages .^ σ)
+    for i in 1:n_spins
+        couplages[i,i] = 0.0
+    end
+    return Chaine(spins, J * couplages)
+end
+
 #Calculer Énergie
 
 function calculer_energie(chaine::Chaine)
@@ -115,7 +129,7 @@ end
 
 # magnetisation
 
-function magnetisation(chaine::Chaine)
+function calculer_magnetisation(chaine::Chaine)
     nbr_haut = sum(chaine.spins)
     nbr_bas = length(chaine) - nbr_haut
     return (nbr_haut - nbr_bas)

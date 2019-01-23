@@ -17,6 +17,8 @@ using Random
     @test systemeAleatoire([1, 1, 1], 3.0, 3.0) == Chaine([1, 1, 1], [0.0 3.0 3.0; 3.0 0.0 3.0; 3.0 3.0 0.0])
 
     @test systemeConstant([1, 1, 1], 2.0) == Chaine([1, 1, 1], [0.0 2.0 2.0; 2.0 0.0 2.0; 2.0 2.0 0.0])
+
+    # tester système polynomial
 end
 
 # Tests Énergie
@@ -49,16 +51,16 @@ end
 @testset "Magnetisation" begin
 
     chaine = systemeUnVoisin([0, 0, 0, 1], 2.5)
-    @test magnetisation(chaine) == -2
+    @test calculer_magnetisation(chaine) == -2
 
     chaine = systemeDeuxVoisins([1, 1, 0], -1.0, 2.45)
-    @test magnetisation(chaine) == 1
+    @test calculer_magnetisation(chaine) == 1
 
     chaine = systemeAleatoire([0, 0, 1, 0], 1.0, 1.0)
-    @test magnetisation(chaine) == -2
+    @test calculer_magnetisation(chaine) == -2
 
     chaine = systemeConstant([1, 1, 1, 1, 1], -23.9)
-    @test magnetisation(chaine) == 5
+    @test calculer_magnetisation(chaine) == 5
 end
 
 @testset "Inverser Spin" begin
