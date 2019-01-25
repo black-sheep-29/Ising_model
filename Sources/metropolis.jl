@@ -11,35 +11,22 @@ k = 1.38064852e-23
 function coordonnee(chaine::Chaine)
     a = rand(1:length(chaine))
     return a
-
-function energie(chaine::Chaine, a)                 # vérifier erreur #
-    alignement_des_spins = 0
-    if i != 1
-        if chaine.spins[i] == chaine.spins[i + 1]
-            global alignement_des_spins = 1
-        else
-            global alignement_des_spins = -1
-        end
-    end
-    if i != length(chaine)
-            if chaine.spins[i] == chaine.spins[i - 1]
-                global alignement_des_spins = 1
-            else
-                global alignement_des_spins = -1
-            end
-        end
-    end
-    return -chaine.couplages[i] * alignement_des_spins
 end
 
 
-
-
-
-
-function difference_energie(chaine::Chaine, a)                          # J-P: Pour tester la fonction il faut que
-    return energie(inverser_spin(chaine, a), a) - energie(chaine, a)    # que la fonction énergie fonctionne!
+function iteration_metropolis(chaine::Chaine, temperature::Float64, n_iters::Int)
+    for i in 1:n_iters
+        c = coordonnee(chaine)
+        diff_E = difference_energie(chaine, c)
+        if diff_E <= 0
+            chaine = inverser_spin(chaine, c)
+        elseif rand() < exp(-diff_E/(k * temperature))
+            chaine = inverser_spin(chaine, c)
+        end
+    end
+    return chaine
 end
+
 
 function metropolis(chaine::Chaine, temperature::Float64, n_iters::Int, tolerence::Float64, max_iter::Int = 10000)
     energie_systeme = [calculer_energie(chaine)]
@@ -63,3 +50,7 @@ function metropolis(chaine::Chaine, temperature::Float64, n_iters::Int, tolerenc
 
     return energie_systeme, magnetisation_systeme
 end
+
+
+chaine = systemePolynomial([1, 1, 0, 1], -4.0, 2)
+println(metropolis(chaine, 2.0, 50000, 0.000000001))
