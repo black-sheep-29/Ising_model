@@ -8,7 +8,9 @@ k = 1.38064852e-23
 
 #Fonctions Utilitaires
 
-coordonnee(chaine::Chaine) = rand(1:length(chaine))
+function coordonnee(chaine::Chaine)
+    a = rand(1:length(chaine))
+    return a
 
 function energie(chaine::Chaine, a)                 # vérifier erreur #
     alignement_des_spins = 0
@@ -29,9 +31,6 @@ function energie(chaine::Chaine, a)                 # vérifier erreur #
     end
     return -chaine.couplages[i] * alignement_des_spins
 end
-
-chaine = systemeUnVoisin([1, 1, 1, 0, 0], 3.0)
-println(energie(chaine, 2))
 
 
 
