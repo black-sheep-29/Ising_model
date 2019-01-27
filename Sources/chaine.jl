@@ -127,7 +127,6 @@ function difference_energie(chaine::Chaine, a)
     return calculer_energie(inverser_spin(chaine, a), a) - calculer_energie(chaine, a)
 end
 
-# magnetisation
 
 function calculer_magnetisation(chaine::Chaine)
     nbr_haut = sum(chaine.spins)
@@ -135,7 +134,6 @@ function calculer_magnetisation(chaine::Chaine)
     return (nbr_haut - nbr_bas)
 end
 
-# Inverser spins
 
 function inverser_spin(chaine::Chaine, a::Int)
     c = copy(chaine)

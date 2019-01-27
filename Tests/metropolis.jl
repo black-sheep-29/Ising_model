@@ -5,6 +5,7 @@ using Random
 using Statistics
 
 @testset "Coordonées" begin
+
     Random.seed!(42)
     chaine = systemeUnVoisin([1, 1, 1], 1.0)
     @test coordonnee(chaine) == 1
@@ -22,17 +23,25 @@ using Statistics
     @test coordonnee(chaine) == 2
 end
 
+
 @testset "Itération de métropolis" begin
     Random.seed!(42)
     chaine = systemeUnVoisin([1, 1, 0, 1], k)
     @test iteration_metropolis(chaine, 1.0, 3).spins == [1, 0, 0, 1]
 
-    # Faire un second test un petit peu plus gros.
+    Random.seed!(42)
+    chaine = systemeDeuxVoisins([1, 0, 0, 1], k, k)
+    @test iteration_metropolis(chaine, 0.5, 5).spins == [0, 0, 0, 0]
 end
 
 @testset "Metropolis" begin
-    # chaine = systemePolynomial(rand(0:1, 1000), k, 2)
-    # println(metropolis(chaine, 1.0, 2, k))
-    # energie, magnetisastion = metropolis(chaine, 1.0, 100, 0.0001 * k)
+
 
 end
+
+
+
+chaine = systemePolynomial(rand(0:1, 1000), k, 2)
+println(metropolis(chaine, 1.0, 2, k))
+energie, magnetisation = metropolis(chaine, 0.005, 10, 0.0001 * k)
+#println(magnetisation)

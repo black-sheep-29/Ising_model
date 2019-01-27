@@ -52,5 +52,8 @@ function metropolis(chaine::Chaine, temperature::Float64, n_iters::Int, tolerenc
 end
 
 
-chaine = systemePolynomial([1, 1, 0, 1], -4.0, 2)
-println(metropolis(chaine, 2.0, 50000, 0.000000001))
+function temperature_m(chaine::Chaine, t_min::Int, t_max::Int, n_iters::Int, tolerence::Float64)
+    t = temperature
+    for t in t_min:t_max
+
+end
