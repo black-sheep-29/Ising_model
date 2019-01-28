@@ -34,7 +34,7 @@ end
     Random.seed!(42)
     chaine = systemeAleatoire([1, 1, 1], 3.0, 7.0)
     @test calculer_energie(chaine) ≈ -13.019595913383872
-    chaine = systemeAleatoire([1, 1, 1], 1.0, 1.0)          # vérifier #
+    chaine = systemeAleatoire([1, 1, 1], 1.0, 1.0)
     @test calculer_energie(chaine) ≈ -3.0
 
     chaine = systemeConstant([1, 0, 1, 1], -2.0)
