@@ -53,14 +53,10 @@ end
 
 
 function temperature_m(chaine::Chaine, n_iters::Int, tolerence::Float64, t_min::Float64, t_max::Float64, incr::Float64)
-
     for temperature in t_min:incr:t_max
-        m = metropolis(chaine, temperature, n_iters::Int, tolerence)
+        return metropolis(chaine, temperature, n_iters, tolerence)
     end
-    return m
 end
 
 chaine = systemePolynomial(rand(0:1, 1000), k, 2)
-println(temperature_m(chaine, 100, 0.0001 * k, 0.00, 2.0, 0.25)
-
-#show(temperature_m(0.0, 5.0, 0.25))
+println(temperature_m(chaine, 10, 0.0001 * k, 0.00, 2.0, 0.5))

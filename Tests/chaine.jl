@@ -41,9 +41,9 @@ end
     @test calculer_energie(chaine) ≈ 0.0
     @test calculer_energie(chaine, 2) ≈ -6.0
 
-#    chaine = systemePolynomial([1, 1, 1], 1.0, 1)        # vérifier #
-#    @test calculer_energie(chaine) ≈ -2.5
-#    @test calculer_energie(chaine, 3) ≈ 0.0
+    chaine = systemePolynomial([1, 1, 1], 1.0, 1)
+    @test calculer_energie(chaine) ≈ -2.5
+    @test calculer_energie(chaine, 3) ≈ -1.5
 end
 
 @testset "Magnetisation" begin

@@ -1,3 +1,4 @@
+include("../Sources/chaine.jl")
 
 using Plots
 gr()
