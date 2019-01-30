@@ -5,7 +5,7 @@ import Base: length, copy, ==, !=, ≈
 
 # Définitions
 
-struct Chaine
+mutable struct Chaine
     spins::Vector{Int}
     couplages::Matrix{Float64}
 
