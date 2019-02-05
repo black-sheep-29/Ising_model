@@ -42,6 +42,18 @@ function systemeUnVoisin(spins::Vector{Int}, J::Float64)  # EX: systemeUnVoisin(
     return Chaine(spins, couplages)
 end
 
+function systemeUnVoisinPeriodique(spins::Vector{Int}, J::Float64)
+    n_spins = length(spins)                               #
+    couplages = zeros(n_spins, n_spins)                   #  0 0 0       0.0  1.0  1.0
+    for i in 1:(n_spins - 1)                              #  0 0 0  -->  1.0  0.0  1.0
+        couplages[i, i + 1] = J                           #  0 0 0       1.0  1.0  0.0
+        couplages[i + 1, i] = J
+    end
+    couplages[1,end] = J
+    couplages[end,1] = J
+    return Chaine(spins, couplages)
+end
+
 function systemeDeuxVoisins(spins::Vector{Int}, J_1::Float64, J_2::Float64)  # Ex: systemDeuxVoisins([0, 0, 0], 1.0)
     n_spins = length(spins)                                                  #
     couplages = zeros(n_spins, n_spins)                                      #  0 0 0       0.0  1.0  1.0
@@ -56,6 +68,30 @@ function systemeDeuxVoisins(spins::Vector{Int}, J_1::Float64, J_2::Float64)  # E
         couplages[i + 2, i] = J_2
     end
 
+    return Chaine(spins, couplages)
+end
+
+function systemeDeuxVoisinsPeriodique(spins::Vector{Int}, J_1::Float64, J_2::Float64)
+    n_spins = length(spins)                                                  #
+    couplages = zeros(n_spins, n_spins)                                      #  0 0 0       0.0  1.0  1.0
+    for i in 1:(n_spins - 1)                                                 #  0 0 0  -->  1.0  0.0  1.0
+        couplages[i, i + 1] = J_1                                            #  0 0 0       1.0  1.0  0.0
+        couplages[i + 1, i] = J_1
+    end
+
+    # couplage avec le second voisin.
+    for i in 1:(n_spins - 2)
+        couplages[i, i + 2] = J_2
+        couplages[i + 2, i] = J_2
+    end
+
+    couplages[1,end] = J_1
+    couplages[end,1] = J_1
+
+    couplages[2,end] = J_2
+    couplages[end,2] = J_2
+    couplages[1,end-1] = J_2
+    couplages[end-1,1] = J_2
     return Chaine(spins, couplages)
 end
 
