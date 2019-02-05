@@ -1,7 +1,7 @@
 # Ising_model
 
 ## Projet expo-science 2019
-#### Contributeurs
+### Contributeurs
 Julien-Pierre / Maxime
 
 ### Piste du projet:

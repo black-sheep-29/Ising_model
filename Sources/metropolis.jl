@@ -53,13 +53,13 @@ end
 
 
 function temperature_m(chaine::Chaine, n_iters::Int, tolerance::Float64, t_min::Float64, t_max::Float64, incr::Float64)
-    resultats = zeros(3, length(t_min:incr:t_max))
+    resultats = zeros(6, length(t_min:incr:t_max))
     for (i, temperature) in enumerate(t_min:incr:t_max)
         println("--- ", temperature, " ---")
         @time begin
             chaine.spins = rand(0:1, length(chaine))
             energie, magnetisation = metropolis(chaine, temperature, n_iters, tolerance)
-            resultats[:,i] = [mean(energie), mean(magnetisation), mean(abs.(magnetisation))]
+            resultats[:,i] = [mean(energie), mean(magnetisation), mean(abs.(magnetisation)), std(energie), std(magnetisation), std(abs.(magnetisation))]
         end
     end
     return resultats
