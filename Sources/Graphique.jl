@@ -31,7 +31,7 @@ data = DataFrame(Température = t_min:incr:t_max, Énergie_moyenne = resultats[1
                 Écart_magnétisation = resultats[5,:],
                 Écart_magnétisation_absolue = resultats[6,:])
 
-CSV.write("../Donnees/"*nom_des_donnees*".csv")
+CSV.write("../Donnees/"*nom_des_donnees*".csv", data)
 p = plot(data, x = :Température, y = :Magnétisation_absolue_moyenne)
 
 p |> PDF("../Images/"*nom_des_donnees*".pdf")
