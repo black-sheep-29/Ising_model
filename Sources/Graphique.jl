@@ -6,6 +6,7 @@ using Cairo
 using Fontconfig
 using CSV
 
+#Variables
 t_min = 0.1
 t_max = 10.00
 incr = 0.1
